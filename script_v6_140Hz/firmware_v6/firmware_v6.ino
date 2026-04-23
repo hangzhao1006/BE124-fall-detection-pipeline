@@ -31,9 +31,9 @@
 // ============================================================
 // CONFIG
 // ============================================================
-const char* WIFI_SSID     = "Suckest-Wifi-in-Boston";
-const char* WIFI_PASSWORD = "z3234220148";
-const char* LAPTOP_IP     = "192.168.1.164";
+const char* WIFI_SSID     = "吴笑阳's iPhone";
+const char* WIFI_PASSWORD = "wxy020212";
+const char* LAPTOP_IP     = "172.20.10.10";
 const int   UDP_PORT      = 12345;
 
 // ============================================================

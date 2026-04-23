@@ -96,7 +96,8 @@ class BinaryUDPLogger:
                     expected = (self.last_frame_id + 1) & 0xFFFF
                     if frame_id != expected:
                         gap = (frame_id - self.last_frame_id) & 0xFFFF
-                        self.dropped += gap - 1
+                        if gap < 1000:  # 真正的丢帧不会一次丢上千帧
+                            self.dropped += gap - 1
                 self.last_frame_id = frame_id
 
                 # Build timestamp string
