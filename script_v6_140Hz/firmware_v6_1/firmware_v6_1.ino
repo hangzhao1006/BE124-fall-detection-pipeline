@@ -30,9 +30,9 @@
 // ============================================================
 // CONFIG - verified correct
 // ============================================================
-const char* WIFI_SSID     = "Suckest-Wifi-in-Boston";
-const char* WIFI_PASSWORD = "z3234220148";
-const char* LAPTOP_IP     = "192.168.1.164";
+const char* WIFI_SSID     = "Tong";
+const char* WIFI_PASSWORD = "12345678";
+const char* LAPTOP_IP     = "172.20.10.13";
 const int   UDP_PORT      = 12345;
 
 // ============================================================
@@ -57,8 +57,8 @@ struct IMUFrame {
 // PCA9548A - actual channel assignments
 // ============================================================
 #define MUX_ADDR 0x70
-#define CH_THIGH 5
-#define CH_SHANK 4
+#define CH_THIGH 4
+#define CH_SHANK 5
 #define CH_FOOT  7
 
 void muxSelect(uint8_t ch) {

@@ -39,8 +39,8 @@ import sys
 ACC_MAX = 50.0      # m/s², anything above this is anomaly
 GYRO_MAX = 20.0     # rad/s, for ICM-20948 (already converted)
 GYRO_MAX_DEG = 1145  # °/s, for unconverted BNO055 (20 rad/s * 57.3)
-MAG_MAX = 500.0     # µT
-EULER_MAX = 360.0   # degrees
+MAG_MAX = 5000.0    # µT, raised high - mag spikes from nearby metal are common indoors
+EULER_MAX = 360.0   # degrees - Euler angles are NOT checked for anomalies (0-360 is valid)
 
 # Column groups
 THIGH_ACC = ['thigh_acc_x', 'thigh_acc_y', 'thigh_acc_z']
@@ -141,18 +141,10 @@ def detect_anomalies(df, acc_max=ACC_MAX, gyro_max=GYRO_MAX, mag_max=MAG_MAX):
                 }
                 total_anomalies += count
 
-    # Check magnetometer
-    for col in ALL_MAG:
-        if col in df.columns:
-            mask = df[col].abs() > mag_max
-            count = mask.sum()
-            if count > 0:
-                anomalies[col] = {
-                    'count': count,
-                    'max_val': df[col].abs().max(),
-                    'indices': df.index[mask].tolist()
-                }
-                total_anomalies += count
+    # Magnetometer and Euler angles are NOT checked for anomalies:
+    # - Mag spikes from nearby metal/phones are common and expected indoors
+    # - Euler angles (0-360°) are always in valid range
+    # - Neither is critical for the fall prediction model
 
     # Check for constant values (sensor stuck)
     for col in ALL_ACC + ALL_GYRO:
@@ -241,14 +233,8 @@ def fix_anomalies(df, acc_max=ACC_MAX, gyro_max=GYRO_MAX, mag_max=MAG_MAX):
                 df.loc[mask, col] = np.nan
                 fixed_count += count
 
-    # Fix magnetometer outliers
-    for col in ALL_MAG:
-        if col in df.columns:
-            mask = df[col].abs() > mag_max
-            count = mask.sum()
-            if count > 0:
-                df.loc[mask, col] = np.nan
-                fixed_count += count
+    # Magnetometer is NOT fixed - spikes are from environment, not sensor errors
+    # Euler angles are NOT fixed - always in valid range
 
     # Interpolate NaN values
     if fixed_count > 0:
