@@ -63,11 +63,11 @@ Key points / 安装要点:
 
 | Category 类别 | Subject 被试 | Count 数量 | Duration 时长 | Hz |
 |--------------|-------------|-----------|--------------|-----|
-| Trip (绊倒) | Hang | 13 | ~70s each | 157-163 |
+| Trip (绊倒) | Hang | 20 | ~70s each | 157-163 |
 | Trip (绊倒) | Xiaoyang | 8 | ~70s each | 161-163 |
 | Normal Walking (正常走路) | Hang | 10 | ~70s each | 163-164 |
 | Normal Walking (正常走路) | Xiaoyang | 10 | ~70s each | 161-163 |
-| **Total 合计** | | **41** | **~48 min** | |
+| **Total 合计** | | **49** | **~50 min** | |
 
 ### 4.2 Data Format / 数据格式
 
