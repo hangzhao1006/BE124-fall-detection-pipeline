@@ -1,0 +1,598 @@
+{
+  "target_hz": 120,
+  "window_ms": 500,
+  "stride_ms": 250,
+  "horizons_ms": [
+    100,
+    200,
+    300,
+    500
+  ],
+  "split_mode": "random",
+  "n_features": 18,
+  "feature_cols": [
+    "thigh_acc_x",
+    "thigh_acc_y",
+    "thigh_acc_z",
+    "thigh_gyro_x",
+    "thigh_gyro_y",
+    "thigh_gyro_z",
+    "shank_acc_x",
+    "shank_acc_y",
+    "shank_acc_z",
+    "shank_gyro_x",
+    "shank_gyro_y",
+    "shank_gyro_z",
+    "foot_acc_x",
+    "foot_acc_y",
+    "foot_acc_z",
+    "foot_gyro_x",
+    "foot_gyro_y",
+    "foot_gyro_z"
+  ],
+  "train_trials": [
+    "normal_hang_02",
+    "normal_hang_03",
+    "normal_hang_05",
+    "normal_hang_08",
+    "normal_hang_10",
+    "normal_xiaoyang_01",
+    "normal_xiaoyang_02",
+    "normal_xiaoyang_05",
+    "normal_xiaoyang_06",
+    "normal_xiaoyang_07",
+    "normal_xiaoyang_09",
+    "normal_xiaoyang_10",
+    "trip_hang_01",
+    "trip_hang_02",
+    "trip_hang_03",
+    "trip_hang_04",
+    "trip_hang_05",
+    "trip_hang_06",
+    "trip_hang_07",
+    "trip_hang_08",
+    "trip_hang_09",
+    "trip_hang_10",
+    "trip_hang_11",
+    "trip_hang_13",
+    "trip_hang_15",
+    "trip_hang_16",
+    "trip_hang_18",
+    "trip_hang_19",
+    "trip_hang_20",
+    "trip_xiaoyang_01",
+    "trip_xiaoyang_02",
+    "trip_xiaoyang_03",
+    "trip_xiaoyang_04",
+    "trip_xiaoyang_05",
+    "trip_xiaoyang_08",
+    "trip_xiaoyang_10",
+    "trip_xiaoyang_12",
+    "trip_xiaoyang_14",
+    "trip_xiaoyang_16",
+    "trip_xiaoyang_17",
+    "trip_xiaoyang_19",
+    "trip_xiaoyang_20"
+  ],
+  "val_trials": [
+    "normal_hang_04",
+    "normal_hang_07",
+    "normal_hang_09",
+    "normal_xiaoyang_08",
+    "trip_hang_12",
+    "trip_xiaoyang_07",
+    "trip_xiaoyang_11",
+    "trip_xiaoyang_13",
+    "trip_xiaoyang_18"
+  ],
+  "test_trials": [
+    "normal_hang_01",
+    "normal_hang_06",
+    "normal_xiaoyang_03",
+    "normal_xiaoyang_04",
+    "trip_hang_14",
+    "trip_hang_17",
+    "trip_xiaoyang_06",
+    "trip_xiaoyang_09",
+    "trip_xiaoyang_15"
+  ],
+  "label_report": [
+    {
+      "file": "trip_hang_01",
+      "type": "trip",
+      "subject": "hang",
+      "perturb_time": 21.616000175476074,
+      "n_windows": 276,
+      "n_positive": 4
+    },
+    {
+      "file": "trip_hang_02",
+      "type": "trip",
+      "subject": "hang",
+      "perturb_time": 60.254000186920166,
+      "n_windows": 291,
+      "n_positive": 3
+    },
+    {
+      "file": "trip_hang_03",
+      "type": "trip",
+      "subject": "hang",
+      "perturb_time": 46.01099991798401,
+      "n_windows": 281,
+      "n_positive": 4
+    },
+    {
+      "file": "trip_hang_04",
+      "type": "trip",
+      "subject": "hang",
+      "perturb_time": 30.069000005722046,
+      "n_windows": 272,
+      "n_positive": 4
+    },
+    {
+      "file": "trip_hang_05",
+      "type": "trip",
+      "subject": "hang",
+      "perturb_time": 66.60800004005432,
+      "n_windows": 296,
+      "n_positive": 4
+    },
+    {
+      "file": "trip_hang_06",
+      "type": "trip",
+      "subject": "hang",
+      "perturb_time": 26.242000102996826,
+      "n_windows": 252,
+      "n_positive": 4
+    },
+    {
+      "file": "trip_hang_07",
+      "type": "trip",
+      "subject": "hang",
+      "perturb_time": 22.802000045776367,
+      "n_windows": 249,
+      "n_positive": 4
+    },
+    {
+      "file": "trip_hang_08",
+      "type": "trip",
+      "subject": "hang",
+      "perturb_time": 58.342000007629395,
+      "n_windows": 279,
+      "n_positive": 4
+    },
+    {
+      "file": "trip_hang_09",
+      "type": "trip",
+      "subject": "hang",
+      "perturb_time": 12.572999954223633,
+      "n_windows": 281,
+      "n_positive": 4
+    },
+    {
+      "file": "trip_hang_10",
+      "type": "trip",
+      "subject": "hang",
+      "perturb_time": 13.786999940872192,
+      "n_windows": 251,
+      "n_positive": 4
+    },
+    {
+      "file": "trip_hang_11",
+      "type": "trip",
+      "subject": "hang",
+      "perturb_time": 27.519999980926514,
+      "n_windows": 327,
+      "n_positive": 4
+    },
+    {
+      "file": "trip_hang_12",
+      "type": "trip",
+      "subject": "hang",
+      "perturb_time": 44.57099986076355,
+      "n_windows": 262,
+      "n_positive": 4
+    },
+    {
+      "file": "trip_hang_13",
+      "type": "trip",
+      "subject": "hang",
+      "perturb_time": 34.75999999046326,
+      "n_windows": 311,
+      "n_positive": 4
+    },
+    {
+      "file": "trip_hang_14",
+      "type": "trip",
+      "subject": "hang",
+      "perturb_time": 21.462999999999994,
+      "n_windows": 298,
+      "n_positive": 4
+    },
+    {
+      "file": "trip_hang_15",
+      "type": "trip",
+      "subject": "hang",
+      "perturb_time": 21.65799999999996,
+      "n_windows": 268,
+      "n_positive": 4
+    },
+    {
+      "file": "trip_hang_16",
+      "type": "trip",
+      "subject": "hang",
+      "perturb_time": 8.701999999999998,
+      "n_windows": 250,
+      "n_positive": 4
+    },
+    {
+      "file": "trip_hang_17",
+      "type": "trip",
+      "subject": "hang",
+      "perturb_time": 7.2339999999999804,
+      "n_windows": 283,
+      "n_positive": 4
+    },
+    {
+      "file": "trip_hang_18",
+      "type": "trip",
+      "subject": "hang",
+      "perturb_time": 30.317000000000007,
+      "n_windows": 248,
+      "n_positive": 4
+    },
+    {
+      "file": "trip_hang_19",
+      "type": "trip",
+      "subject": "hang",
+      "perturb_time": 25.634000000000015,
+      "n_windows": 279,
+      "n_positive": 4
+    },
+    {
+      "file": "trip_hang_20",
+      "type": "trip",
+      "subject": "hang",
+      "perturb_time": 19.031999999999925,
+      "n_windows": 264,
+      "n_positive": 4
+    },
+    {
+      "file": "trip_xiaoyang_01",
+      "type": "trip",
+      "subject": "xiaoyang",
+      "perturb_time": 23.694000005722046,
+      "n_windows": 282,
+      "n_positive": 4
+    },
+    {
+      "file": "trip_xiaoyang_02",
+      "type": "trip",
+      "subject": "xiaoyang",
+      "perturb_time": 20.936000108718872,
+      "n_windows": 282,
+      "n_positive": 4
+    },
+    {
+      "file": "trip_xiaoyang_03",
+      "type": "trip",
+      "subject": "xiaoyang",
+      "perturb_time": 20.108999967575073,
+      "n_windows": 247,
+      "n_positive": 4
+    },
+    {
+      "file": "trip_xiaoyang_04",
+      "type": "trip",
+      "subject": "xiaoyang",
+      "perturb_time": 21.02400016784668,
+      "n_windows": 261,
+      "n_positive": 4
+    },
+    {
+      "file": "trip_xiaoyang_05",
+      "type": "trip",
+      "subject": "xiaoyang",
+      "perturb_time": 36.62700009346008,
+      "n_windows": 279,
+      "n_positive": 4
+    },
+    {
+      "file": "trip_xiaoyang_06",
+      "type": "trip",
+      "subject": "xiaoyang",
+      "perturb_time": 34.84100008010864,
+      "n_windows": 245,
+      "n_positive": 4
+    },
+    {
+      "file": "trip_xiaoyang_07",
+      "type": "trip",
+      "subject": "xiaoyang",
+      "perturb_time": 45.09099984169006,
+      "n_windows": 280,
+      "n_positive": 4
+    },
+    {
+      "file": "trip_xiaoyang_08",
+      "type": "trip",
+      "subject": "xiaoyang",
+      "perturb_time": 50.54099988937378,
+      "n_windows": 267,
+      "n_positive": 4
+    },
+    {
+      "file": "trip_xiaoyang_09",
+      "type": "trip",
+      "subject": "xiaoyang",
+      "perturb_time": 65.00800000000001,
+      "n_windows": 320,
+      "n_positive": 3
+    },
+    {
+      "file": "trip_xiaoyang_10",
+      "type": "trip",
+      "subject": "xiaoyang",
+      "perturb_time": 17.509000000000015,
+      "n_windows": 263,
+      "n_positive": 4
+    },
+    {
+      "file": "trip_xiaoyang_11",
+      "type": "trip",
+      "subject": "xiaoyang",
+      "perturb_time": 41.736999999999995,
+      "n_windows": 315,
+      "n_positive": 4
+    },
+    {
+      "file": "trip_xiaoyang_12",
+      "type": "trip",
+      "subject": "xiaoyang",
+      "perturb_time": 27.609999999999957,
+      "n_windows": 259,
+      "n_positive": 4
+    },
+    {
+      "file": "trip_xiaoyang_13",
+      "type": "trip",
+      "subject": "xiaoyang",
+      "perturb_time": 14.99799999999999,
+      "n_windows": 256,
+      "n_positive": 3
+    },
+    {
+      "file": "trip_xiaoyang_14",
+      "type": "trip",
+      "subject": "xiaoyang",
+      "perturb_time": 32.34300000000002,
+      "n_windows": 259,
+      "n_positive": 4
+    },
+    {
+      "file": "trip_xiaoyang_15",
+      "type": "trip",
+      "subject": "xiaoyang",
+      "perturb_time": 24.03099999999995,
+      "n_windows": 275,
+      "n_positive": 4
+    },
+    {
+      "file": "trip_xiaoyang_16",
+      "type": "trip",
+      "subject": "xiaoyang",
+      "perturb_time": 60.82000000000005,
+      "n_windows": 354,
+      "n_positive": 4
+    },
+    {
+      "file": "trip_xiaoyang_17",
+      "type": "trip",
+      "subject": "xiaoyang",
+      "perturb_time": 55.597999999999956,
+      "n_windows": 267,
+      "n_positive": 4
+    },
+    {
+      "file": "trip_xiaoyang_18",
+      "type": "trip",
+      "subject": "xiaoyang",
+      "perturb_time": 55.35800000000006,
+      "n_windows": 257,
+      "n_positive": 4
+    },
+    {
+      "file": "trip_xiaoyang_19",
+      "type": "trip",
+      "subject": "xiaoyang",
+      "perturb_time": 56.02800000000002,
+      "n_windows": 305,
+      "n_positive": 4
+    },
+    {
+      "file": "trip_xiaoyang_20",
+      "type": "trip",
+      "subject": "xiaoyang",
+      "perturb_time": 41.06299999999999,
+      "n_windows": 346,
+      "n_positive": 4
+    },
+    {
+      "file": "normal_hang_01",
+      "type": "normal",
+      "subject": "hang",
+      "perturb_time": null,
+      "n_windows": 285,
+      "n_positive": 0
+    },
+    {
+      "file": "normal_hang_02",
+      "type": "normal",
+      "subject": "hang",
+      "perturb_time": null,
+      "n_windows": 282,
+      "n_positive": 0
+    },
+    {
+      "file": "normal_hang_03",
+      "type": "normal",
+      "subject": "hang",
+      "perturb_time": null,
+      "n_windows": 283,
+      "n_positive": 0
+    },
+    {
+      "file": "normal_hang_04",
+      "type": "normal",
+      "subject": "hang",
+      "perturb_time": null,
+      "n_windows": 277,
+      "n_positive": 0
+    },
+    {
+      "file": "normal_hang_05",
+      "type": "normal",
+      "subject": "hang",
+      "perturb_time": null,
+      "n_windows": 265,
+      "n_positive": 0
+    },
+    {
+      "file": "normal_hang_06",
+      "type": "normal",
+      "subject": "hang",
+      "perturb_time": null,
+      "n_windows": 265,
+      "n_positive": 0
+    },
+    {
+      "file": "normal_hang_07",
+      "type": "normal",
+      "subject": "hang",
+      "perturb_time": null,
+      "n_windows": 268,
+      "n_positive": 0
+    },
+    {
+      "file": "normal_hang_08",
+      "type": "normal",
+      "subject": "hang",
+      "perturb_time": null,
+      "n_windows": 270,
+      "n_positive": 0
+    },
+    {
+      "file": "normal_hang_09",
+      "type": "normal",
+      "subject": "hang",
+      "perturb_time": null,
+      "n_windows": 278,
+      "n_positive": 0
+    },
+    {
+      "file": "normal_hang_10",
+      "type": "normal",
+      "subject": "hang",
+      "perturb_time": null,
+      "n_windows": 272,
+      "n_positive": 0
+    },
+    {
+      "file": "normal_xiaoyang_01",
+      "type": "normal",
+      "subject": "xiaoyang",
+      "perturb_time": null,
+      "n_windows": 282,
+      "n_positive": 0
+    },
+    {
+      "file": "normal_xiaoyang_02",
+      "type": "normal",
+      "subject": "xiaoyang",
+      "perturb_time": null,
+      "n_windows": 288,
+      "n_positive": 0
+    },
+    {
+      "file": "normal_xiaoyang_03",
+      "type": "normal",
+      "subject": "xiaoyang",
+      "perturb_time": null,
+      "n_windows": 293,
+      "n_positive": 0
+    },
+    {
+      "file": "normal_xiaoyang_04",
+      "type": "normal",
+      "subject": "xiaoyang",
+      "perturb_time": null,
+      "n_windows": 321,
+      "n_positive": 0
+    },
+    {
+      "file": "normal_xiaoyang_05",
+      "type": "normal",
+      "subject": "xiaoyang",
+      "perturb_time": null,
+      "n_windows": 283,
+      "n_positive": 0
+    },
+    {
+      "file": "normal_xiaoyang_06",
+      "type": "normal",
+      "subject": "xiaoyang",
+      "perturb_time": null,
+      "n_windows": 365,
+      "n_positive": 0
+    },
+    {
+      "file": "normal_xiaoyang_07",
+      "type": "normal",
+      "subject": "xiaoyang",
+      "perturb_time": null,
+      "n_windows": 320,
+      "n_positive": 0
+    },
+    {
+      "file": "normal_xiaoyang_08",
+      "type": "normal",
+      "subject": "xiaoyang",
+      "perturb_time": null,
+      "n_windows": 286,
+      "n_positive": 0
+    },
+    {
+      "file": "normal_xiaoyang_09",
+      "type": "normal",
+      "subject": "xiaoyang",
+      "perturb_time": null,
+      "n_windows": 290,
+      "n_positive": 0
+    },
+    {
+      "file": "normal_xiaoyang_10",
+      "type": "normal",
+      "subject": "xiaoyang",
+      "perturb_time": null,
+      "n_windows": 281,
+      "n_positive": 0
+    }
+  ],
+  "shapes": {
+    "X_train": [
+      11827,
+      60,
+      18
+    ],
+    "X_val": [
+      2479,
+      60,
+      18
+    ],
+    "X_test": [
+      2585,
+      60,
+      18
+    ]
+  }
+}
