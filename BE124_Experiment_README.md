@@ -146,7 +146,7 @@ const char* LAPTOP_IP     = "笔记本IP";
 
 | 场景 | Hang | Xiaoyang | 合计 |
 |------|------|----------|------|
-| Block Slip | 15 | 15 | 30 |
+| Block Slip | 15  | 15 | 30 |
 | Carpet Trip | 15 | 15 | 30 |
 | Normal Walking | 10 | 10 | 20 |
 | **合计** | **40** | **40** | **80** |
