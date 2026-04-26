@@ -249,10 +249,10 @@ python preprocess.py --data-dir data/ --output-dir dataset_100hz_loso/ --split l
 python preprocess.py --data-dir data/ --output-dir dataset_100hz/
 
 # Generate at other frequencies for ablation
-python preprocess.py --data-dir data/ --output-dir dataset_50hz/ --target-hz 50
-python preprocess.py --data-dir data/ --output-dir dataset_80hz/ --target-hz 80
-python preprocess.py --data-dir data/ --output-dir dataset_120hz/ --target-hz 120
-python preprocess.py --data-dir data/ --output-dir dataset_160hz/ --target-hz 160
+python preprocess.py --data-dir data/ --output-dir dataset/dataset_50hz/ --target-hz 50
+python preprocess.py --data-dir data/ --output-dir dataset/dataset_80hz/ --target-hz 80
+python preprocess.py --data-dir data/ --output-dir dataset/dataset_120hz/ --target-hz 120
+python preprocess.py --data-dir data/ --output-dir dataset/dataset_160hz/ --target-hz 160
 
 # Custom window size (e.g., 750ms window)
 python preprocess.py --data-dir data/ --output-dir dataset_100hz_750ms/ --window-ms 750
