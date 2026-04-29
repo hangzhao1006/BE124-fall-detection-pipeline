@@ -30,9 +30,9 @@
 // ============================================================
 // CONFIG - verified correct
 // ============================================================
-const char* WIFI_SSID     = "Tong";
-const char* WIFI_PASSWORD = "12345678";
-const char* LAPTOP_IP     = "172.20.10.13";
+const char* WIFI_SSID     = "Suckest-Wifi-in-Boston";
+const char* WIFI_PASSWORD = "z3234220148";
+const char* LAPTOP_IP     = "192.168.1.164";
 const int   UDP_PORT      = 12345;
 
 // ============================================================

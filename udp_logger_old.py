@@ -1,22 +1,17 @@
 """
-BE124 V6 - Binary UDP Logger
-==============================
-Receives binary IMU frames from ESP32 and saves to CSV.
-
-Packet format (132 bytes):
-  magic(4) + epoch_sec(4) + epoch_ms(2) + frame_id(2)
-  + thigh[9 floats](36) + shank[9 floats](36)
-  + foot[9 floats](36) + foot_euler[3 floats](12)
+BE124 V5 - Simple UDP Logger (Complete Frame)
+==============================================
+Each UDP packet = one complete frame with all 3 sensors.
+No merging, no empty fields.
 
 Usage:
-  python script_v6_140Hz/udp_logger.py --test
-  python script_v6_140Hz/udp_logger_v6.py --trial slip_hang_03
+  python udp_logger.py --test
+  python udp_logger.py --trial slip_hang_01
 
 Controls: SPACE = perturbation, Q = stop
 """
 
 import socket
-import struct
 import time
 import csv
 import os
@@ -26,16 +21,6 @@ from datetime import datetime
 
 UDP_PORT = 12345
 OUTPUT_DIR = "data"
-MAGIC = 0xBE124DAA
-
-# Struct format: little-endian
-# I = uint32 (magic)
-# I = uint32 (epoch_sec)
-# H = uint16 (epoch_ms)
-# H = uint16 (frame_id)
-# 30f = 30 floats (thigh9 + shank9 + foot9 + euler3)
-FRAME_FMT = "<IIHH30f"
-FRAME_SIZE = struct.calcsize(FRAME_FMT)  # should be 132
 
 CSV_HEADER = [
     "timestamp",
@@ -53,12 +38,10 @@ CSV_HEADER = [
 ]
 
 
-class BinaryUDPLogger:
+class UDPLogger:
     def __init__(self, trial_name=None):
         self.buffer = []
         self.count = 0
-        self.dropped = 0
-        self.last_frame_id = -1
         self.perturb_flag = False
         self.running = True
 
@@ -68,63 +51,40 @@ class BinaryUDPLogger:
         os.makedirs(OUTPUT_DIR, exist_ok=True)
 
         self.sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-        self.sock.setsockopt(socket.SOL_SOCKET, socket.SO_RCVBUF, 4 * 1024 * 1024)
         self.sock.bind(("0.0.0.0", UDP_PORT))
         self.sock.setblocking(False)
-
-        print(f"  Expected packet size: {FRAME_SIZE} bytes")
 
     def receive(self):
         while True:
             try:
-                data, _ = self.sock.recvfrom(256)
-
-                if len(data) != FRAME_SIZE:
+                data, _ = self.sock.recvfrom(1024)
+                line = data.decode("utf-8", errors="ignore").strip()
+                if not line or line.startswith("#"):
                     continue
 
-                vals = struct.unpack(FRAME_FMT, data)
-                magic = vals[0]
-                if magic != MAGIC:
+                parts = line.split(",")
+                # Expect: timestamp + 9 thigh + 9 shank + 9 foot + 3 euler = 31 fields
+                if len(parts) < 31:
                     continue
 
-                epoch_sec = vals[1]
-                epoch_ms = vals[2]
-                frame_id = vals[3]
-                floats = vals[4:]  # 30 floats
-
-                # Check for dropped frames
-                if self.last_frame_id >= 0:
-                    expected = (self.last_frame_id + 1) & 0xFFFF
-                    if frame_id != expected:
-                        gap = (frame_id - self.last_frame_id) & 0xFFFF
-                        if gap < 1000:  # 真正的丢帧不会一次丢上千帧
-                            self.dropped += gap - 1
-                self.last_frame_id = frame_id
-
-                # Build timestamp string
-                ts = f"{epoch_sec}.{epoch_ms:03d}"
-
-                # Build row: timestamp + 30 floats + perturbation
-                row = [ts]
-                row.extend([f"{v:.4f}" for v in floats])
-
+                # Append perturbation flag
                 if self.perturb_flag:
-                    row.append("1")
+                    parts.append("1")
                     self.perturb_flag = False
                 else:
-                    row.append("0")
+                    parts.append("0")
 
-                self.buffer.append(row)
+                self.buffer.append(parts)
                 self.count += 1
 
             except BlockingIOError:
                 break
-            except struct.error:
+            except (ValueError, IndexError):
                 continue
 
     def record(self):
         print(f"\n{'='*60}")
-        print(f"  RECORDING (Binary UDP, port {UDP_PORT})")
+        print(f"  RECORDING on UDP port {UDP_PORT}")
         print(f"  SPACE = perturbation | Q = stop")
         print(f"{'='*60}\n")
 
@@ -142,10 +102,13 @@ class BinaryUDPLogger:
                     el = time.time() - start
                     hz = self.count / max(el, 0.1)
                     ev = sum(1 for r in self.buffer if r[-1] == "1")
-                    print(f"  [{el:.1f}s] Frames: {self.count} ({hz:.0f} Hz) | Dropped: {self.dropped} | Events: {ev}")
+                    print(f"  [{el:.1f}s] Frames: {self.count} ({hz:.0f} Hz) | Events: {ev}")
                     last_status = time.time()
 
-               
+                dt = time.time() - t0
+                if dt < 0.002:
+                    time.sleep(0.002 - dt)
+
         except KeyboardInterrupt:
             pass
 
@@ -167,7 +130,9 @@ class BinaryUDPLogger:
         ev = sum(1 for r in self.buffer if r[-1] == "1")
         duration = 0
         try:
-            duration = float(self.buffer[-1][0]) - float(self.buffer[0][0])
+            t0 = float(self.buffer[0][0])
+            t1 = float(self.buffer[-1][0])
+            duration = t1 - t0
         except:
             pass
 
@@ -176,8 +141,8 @@ class BinaryUDPLogger:
         print(f"  Frames: {self.count}")
         print(f"  Duration: {duration:.1f}s")
         print(f"  Avg Hz: {self.count / max(duration, 0.1):.0f}")
-        print(f"  Dropped: {self.dropped}")
         print(f"  Events: {ev}")
+        print(f"  Empty fields: 0")
         print(f"  {'='*50}\n")
 
     def _setup_kb(self):
@@ -209,25 +174,26 @@ class BinaryUDPLogger:
 
 def quick_test():
     print(f"\n{'='*60}")
-    print(f"  QUICK TEST - Binary UDP port {UDP_PORT} (10 seconds)")
-    print(f"  Packet size: {FRAME_SIZE} bytes")
+    print(f"  QUICK TEST - UDP port {UDP_PORT} (10 seconds)")
     print(f"{'='*60}\n")
 
-    logger = BinaryUDPLogger("test")
+    logger = UDPLogger("test")
     start = time.time()
     last = start
 
     while time.time() - start < 10:
         logger.receive()
-        time.sleep(0.001)
+        time.sleep(0.002)
 
         if time.time() - last > 1:
             el = time.time() - start
             hz = logger.count / max(el, 0.1)
+            # Show last frame preview
             if logger.buffer:
-                r = logger.buffer[-1]
-                preview = ", ".join(r[1:7])
-                print(f"  [{el:.0f}s] Frames: {logger.count:4d} ({hz:.0f} Hz) | Drop: {logger.dropped} | Thigh: {preview}")
+                last_frame = logger.buffer[-1]
+                # Show first 6 values (thigh acc + gyro)
+                preview = ", ".join(last_frame[1:7])
+                print(f"  [{el:.0f}s] Frames: {logger.count:4d} ({hz:.0f} Hz) | Thigh: {preview}")
             else:
                 print(f"  [{el:.0f}s] Frames: {logger.count:4d} -- no data --")
             last = time.time()
@@ -236,11 +202,11 @@ def quick_test():
     hz = logger.count / 10
     status = "OK" if logger.count > 500 else "LOW" if logger.count > 0 else "FAIL"
     print(f"\n  RESULT: {logger.count} frames in 10s ({hz:.0f} Hz) [{status}]")
-    print(f"  Dropped frames: {logger.dropped}")
+    print(f"  Empty fields: 0 (complete frame mode)")
 
 
 def main():
-    p = argparse.ArgumentParser(description="BE124 V6 Binary UDP Logger")
+    p = argparse.ArgumentParser(description="BE124 V5 UDP Logger")
     p.add_argument("--trial", default=None)
     p.add_argument("--test", action="store_true")
     args = p.parse_args()
@@ -248,7 +214,7 @@ def main():
     if args.test:
         quick_test()
     else:
-        logger = BinaryUDPLogger(args.trial)
+        logger = UDPLogger(args.trial)
         logger.record()
 
 
